@@ -1,0 +1,6 @@
+- name: Install and configure Apache and container
+  hosts: testserver
+  become: true
+  roles:
+    - apache
+    # - container

@@ -1,0 +1,48 @@
+- name: Install Apache
+  ansible.builtin.dnf:
+    name: httpd
+    state: latest
+
+- name: Start service httpd, if not started
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Allow HTTP service
+  ansible.posix.firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
+  become: yes
+
+- name: Allow HTTPS service
+  ansible.posix.firewalld:
+    service: https
+    permanent: yes
+    state: enabled
+    immediate: yes
+  become: yes
+
+- name: Allow SSH service
+  ansible.posix.firewalld:
+    service: ssh
+    permanent: yes
+    state: enabled
+    immediate: yes
+  become: yes
+
+- name: Allow port 8080/tcp
+  ansible.posix.firewalld:
+    port: 8080/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  become: yes
+  notify: Restart service firewalld
+
+- name: Copy httpd.conf
+  ansible.builtin.copy:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
