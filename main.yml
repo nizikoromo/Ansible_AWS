@@ -1,6 +1,6 @@
-- name: Install and configure Apache and container
+- name: Install and configure Apache, Setting binary
   hosts: webserver
   become: true
   roles:
     - apache
-    # - container
+    - binary

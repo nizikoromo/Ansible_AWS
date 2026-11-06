@@ -1,0 +1,22 @@
+- name: Download mysql repo
+  ansible.builtin.dnf:
+    name: https://dev.mysql.com/get/mysql84-community-release-el9-1.noarch.rpm
+    state: present
+
+- name: Install mysql-community-client
+  ansible.builtin.dnf:
+    name: mysql-community-client
+    state: present
+
+- name: Copy log-processor
+  ansible.builtin.copy:
+    src: ../files/log-processor
+    dest: "{{ dest_path }}"
+
+- name: Granting execution permissions
+  ansible.builtin.file:
+    path: "{{ dest_path }}"
+    mode: "0755"
+
+- name: Run the log-processor in the background
+  ansible.builtin.shell: "nohup {{ dest_path }} > /dev/null 2>&1 &"
