@@ -1,7 +1,7 @@
 - name: Install Apache
   ansible.builtin.dnf:
     name: httpd
-    state: latest
+    state: present
 
 - name: Start service httpd, if not started
   ansible.builtin.service:
@@ -12,7 +12,7 @@
 - name: Install firewalld
   ansible.builtin.dnf:
     name: firewalld
-    state: latest
+    state: present
 
 - name: Start service httpd, if not started
   ansible.builtin.service:
