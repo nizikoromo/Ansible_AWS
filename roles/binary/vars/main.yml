@@ -1,1 +1,3 @@
-dest_path: /tmp/log-processor
+dest_path:
+  log_processor: /tmp/log-processor
+  web: /tmp/web

@@ -11,12 +11,25 @@
 - name: Copy log-processor
   ansible.builtin.copy:
     src: ../files/log-processor
-    dest: "{{ dest_path }}"
+    dest: "{{ dest_path['log_processor'] }}"
 
-- name: Granting execution permissions
+- name: Copy web
+  ansible.builtin.copy:
+    src: ../files/web
+    dest: "{{ dest_path['web'] }}"
+
+- name: Grant execution permission to log-processor
   ansible.builtin.file:
-    path: "{{ dest_path }}"
+    path: "{{ dest_path['log_processor'] }}"
+    mode: "0755"
+
+- name: Grant execution permission to web
+  ansible.builtin.file:
+    path: "{{ dest_path['web'] }}"
     mode: "0755"
 
 - name: Run the log-processor in the background
-  ansible.builtin.shell: "nohup {{ dest_path }} > /dev/null 2>&1 &"
+  ansible.builtin.shell: "nohup {{ dest_path['log_processor'] }} > /dev/null 2>&1 &"
+
+- name: Run the web in the background
+  ansible.builtin.shell: "nohup {{ dest_path['web'] }} > /dev/null 2>&1 &"
