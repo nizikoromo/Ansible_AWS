@@ -1,0 +1,9 @@
+- name: Download mysql repo
+  ansible.builtin.dnf:
+    name: https://dev.mysql.com/get/mysql84-community-release-el9-1.noarch.rpm
+    state: present
+
+- name: Install mysql-community-client
+  ansible.builtin.dnf:
+    name: mysql-community-client
+    state: present
